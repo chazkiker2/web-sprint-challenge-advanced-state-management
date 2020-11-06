@@ -4,17 +4,14 @@ import { selectAllSmurfs, fetchSmurfs } from "./smurfsSlice";
 // import {Link}
 
 const SmurfCard = props => {
-	const smurf = props;
-	const s = smurf.smurf[0];
-	// console.log(props);
+	const { smurf } = props;
 	console.log(smurf);
-	console.log(s);
-	// const { age, height, name } = props.smurf[0];
+	const { name, age, height } = smurf;
 	return (
 		<div className="smurf-container">
-			<h3>{`Name: ${s.name}`}</h3>
-			<p>Age: {s.age}</p>
-			<p>Height: {s.height}</p>
+			<h3>Name: {name}</h3>
+			<p>Age: {age}</p>
+			<p>Height: {height}</p>
 		</div>
 	);
 }
@@ -25,11 +22,6 @@ const Smurfs = (props) => {
 	const smurfsStatus = useSelector((state) => state.smurfs.status);
 	const error = useSelector((state) => state.smurfs.error);
 
-	// useEffect(() => {
-	// 	if (smurfsStatus === "idle") {
-	// 		dispatch(fetchSmurfs());
-	// 	}
-	// }, [smurfsStatus, dispatch]);
 	useEffect(() => {
 		dispatch(fetchSmurfs(smurfs));
 	}, []);
@@ -41,8 +33,8 @@ const Smurfs = (props) => {
 	}
 	else if (smurfsStatus === "succeeded") {
 		// const orderedSmurfs = smurfs.sort((a, b) => (a.age - b.age));
-		content = smurfs.map((smurf) => {
-			return (<SmurfCard smurf={smurf} />)
+		content = smurfs.map(smurf => {
+			return (<SmurfCard key={smurf.smurf} smurf={smurf} />)
 		})
 	}
 	else if (smurfsStatus === "error") {

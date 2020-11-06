@@ -43,7 +43,11 @@ const smurfsSlice = createSlice({
 			if (state.status === "pending" && state.currentRequestId === requestId) {
 				state.status = "succeeded";
 				console.log(action.payload);
-				state.smurfs = [...state.smurfs, action.payload];
+				// state.smurfs = [...state.smurfs, action.payload];
+				action.payload.forEach(x => {
+					state.smurfs.push(x);
+				})
+				// state.smurfs.push(action.payload);
 				// state.smurfs.push(action.payload.map(s => { return s }));
 				state.currentRequestId = undefined;
 			}
