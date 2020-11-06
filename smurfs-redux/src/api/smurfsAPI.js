@@ -1,31 +1,41 @@
 import axios from "axios";
-import { BASE_URL, SMURFS, SMURF_ID } from "./serverEndpoints";
+import endpoints from "./serverEndpoints";
+const { BASE_URL, SMURFS, SMURF_ID } = endpoints;
 
 
 export const getSmurfs = async () => {
 	const url = `${BASE_URL}${SMURFS}`;
-	const res = await axios.get(url);
-	return res;
+	const { data } = await axios.get(url);
+	console.log(data);
+	return data;
 };
 
-export const postSmurf = async (bodyIn) => {
+export const postSmurf = (bodyIn) => {
 	const url = `${BASE_URL}${SMURFS}`;
 	const { name, age, height, } = bodyIn;
 	const bodyData = { name, age, height };
-	const res = await axios.post(url, bodyData);
+	const res = axios.post(url, bodyData);
 	return res;
 };
 
-export const putSmurfById = async (id, bodyIn) => {
+export const putSmurfById = (id, bodyIn) => {
 	const url = `${BASE_URL}${SMURF_ID(id)}`;
 	const { name, age, height } = bodyIn;
 	const bodyData = { name, age, height };
-	const res = await axios.put(url, bodyData);
+	const res = axios.put(url, bodyData);
 	return res;
 };
 
-export const deleteSmurfById = async (id) => {
+export const deleteSmurfById = (id) => {
 	const url = `${BASE_URL}${SMURF_ID(id)}`;
-	const res = await axios.delete(url);
+	const res = axios.delete(url);
 	return res;
 }
+
+const client = {
+	getSmurfs,
+	postSmurf,
+	putSmurfById,
+	deleteSmurfById,
+}
+export default client;
