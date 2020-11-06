@@ -2,6 +2,7 @@
 import React from "react";
 // import { Counter } from './features/counter/Counter';
 import Smurfs from "./features/smurfs/Smurfs";
+import SmurfForm from "./features/smurf-form/SmurfForm";
 
 function App() {
 	return (
@@ -12,6 +13,7 @@ function App() {
 			<div>Have fun!</div>
 			{/* <Counter /> */}
 			<Smurfs />
+			<SmurfForm />
 		</div>
 	);
 }
