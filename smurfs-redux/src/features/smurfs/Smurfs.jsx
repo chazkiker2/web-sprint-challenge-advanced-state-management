@@ -1,18 +1,57 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectAllSmurfs, fetchSmurfs, setUpdatedFalse } from "./smurfsSlice";
-// import {Link}
+import styled from "styled-components";
+
+const SGallery = styled.div`
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-evenly;
+	align-items: stretch;
+	background-color: ${pr => pr.theme.wildBlue};
+	width: 80%;
+	margin: 5rem auto;
+	padding: 10rem;
+	border-radius: 20px;
+`;
+const SCard = styled.div`
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	align-items: center;
+	width: 15rem;
+	height: 8rem;
+	border-radius: 20px;
+	/* justify-content: flex-start; */
+	background-color: ${pr => pr.theme.darkPurple};
+	color: ${pr => pr.theme.wildBlue};
+	div {
+		/* width: 100%;
+		height: 100%; */
+		display: flex;
+		flex-flow: column nowrap;
+		justify-content: center;
+		align-items: flex-start;
+		text-align: left;
+		h3 {
+			font-size: 1.4rem;
+			font-weight: 800;
+		}
+	}
+`;
 
 const SmurfCard = props => {
 	const { smurf } = props;
 	console.log(smurf);
 	const { name, age, height } = smurf;
 	return (
-		<div className="smurf-container">
-			<h3>Name: {name}</h3>
-			<p>Age: {age}</p>
-			<p>Height: {height}</p>
-		</div>
+		<SCard className="smurf-container">
+			<div>
+				<h3>Name: {name}</h3>
+				<p>Age: {age} years</p>
+				<p>Height: {height}</p>
+			</div>
+		</SCard>
 	);
 }
 
@@ -23,20 +62,15 @@ const Smurfs = (props) => {
 	const smurfsStatus = useSelector((state) => state.smurfs.status);
 	const error = useSelector((state) => state.smurfs.error);
 
-	useEffect(() => {
-		if (smurfsStatus === "idle" || smurfsStatus === "succeeded") {
-			dispatch(fetchSmurfs(smurfs));
-		}
-	}, [smurfs, smurfsStatus, dispatch]);
+	// useEffect(() => {
+	// 	if (smurfsStatus === "idle" || smurfsStatus === "succeeded") {
+	// 		dispatch(fetchSmurfs(smurfs));
+	// 	}
+	// }, [smurfs, smurfsStatus, dispatch]);
 
 	useEffect(() => {
-		if (updated) {
-			dispatch(fetchSmurfs(smurfs));
-		}
-		return () => {
-			dispatch(setUpdatedFalse);
-		}
-	}, [updated, dispatch, smurfs])
+		dispatch(fetchSmurfs(smurfs));
+	}, [dispatch, smurfs])
 
 
 	let content;
@@ -55,11 +89,9 @@ const Smurfs = (props) => {
 
 	return (
 		<div>
-			<h1>Home Page</h1>
-			{content}
-			{/* {
-				smurfs.length > 0 && smurfs.map(smurf => (<SmurfCard key={smurf.id} smurf={smurf} />))
-			} */}
+			<SGallery>
+				{content}
+			</SGallery>
 		</div>
 	);
 };

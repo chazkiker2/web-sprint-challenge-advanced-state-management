@@ -1,20 +1,44 @@
-
 import React from "react";
 // import { Counter } from './features/counter/Counter';
+import styled, { ThemeProvider } from "styled-components";
+
+import theme from "./theme/index";
+
 import Smurfs from "./features/smurfs/Smurfs";
 import SmurfForm from "./features/smurf-form/SmurfForm";
 
+const SApp = styled.div`
+	background-color: ${pr => pr.theme.blackCoral};
+	height: 100vh;
+`;
+
+const Header = styled.header`
+	width: 100%;
+	background-color: ${props => props.theme.darkPurple};
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 5rem;
+	h1 {
+		color: ${pr => pr.theme.wildBlue};
+		font-size: 2rem;
+		font-weight: 600;
+	}
+`;
+
 function App() {
 	return (
-		<div className="App">
-			<h1>SMURFS! W/Redux</h1>
-			<div>Welcome to your state management version of Smurfs!</div>
-			<div>Start inside of your `src/index.js` file!</div>
-			<div>Have fun!</div>
-			{/* <Counter /> */}
-			<Smurfs />
-			<SmurfForm />
-		</div>
+		<ThemeProvider theme={theme}>
+			<SApp className="App">
+				<Header>
+					<h1>SMURFS! With Redux</h1>
+				</Header>
+				{/* <Counter /> */}
+				<Smurfs />
+				<SmurfForm />
+			</SApp>
+
+		</ThemeProvider>
 	);
 }
 
