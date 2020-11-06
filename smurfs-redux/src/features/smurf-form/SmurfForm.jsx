@@ -1,5 +1,7 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux"
 import { useForm } from "../../hooks/useForm";
+import { postSmurf } from "../smurfs/smurfsSlice";
 
 const initFormState = {
 	name: "",
@@ -8,10 +10,12 @@ const initFormState = {
 }
 
 const SmurfForm = (props) => {
+	const dispatch = useDispatch();
 	const [input, handleChanges, clearForm] = useForm(initFormState);
 
 	const handleSubmit = (evt) => {
 		evt.preventDefault();
+		dispatch(postSmurf(input));
 		clearForm();
 	}
 
@@ -23,11 +27,11 @@ const SmurfForm = (props) => {
 			</label>
 			<label for="age">
 				Age:
-					<input name="age" id="age" type="number" value={input.age} onChange={handleChanges} />
+					<input name="age" id="age" type="number" step="1" value={input.age} onChange={handleChanges} />
 			</label>
 			<label for="height">
 				Height (cm):
-					<input name="height" id="height" type="number" value={input.height} onChange={handleChanges} />
+					<input name="height" id="height" type="number" step="1" value={input.height} onChange={handleChanges} />
 			</label>
 			<button>Submit</button>
 		</form>

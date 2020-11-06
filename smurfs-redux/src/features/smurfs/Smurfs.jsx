@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectAllSmurfs, fetchSmurfs } from "./smurfsSlice";
+import { selectAllSmurfs, fetchSmurfs, setUpdatedFalse } from "./smurfsSlice";
 // import {Link}
 
 const SmurfCard = props => {
@@ -19,12 +19,24 @@ const SmurfCard = props => {
 const Smurfs = (props) => {
 	const dispatch = useDispatch();
 	const smurfs = useSelector(selectAllSmurfs);
+	const updated = useSelector((state) => state.smurfs.updated);
 	const smurfsStatus = useSelector((state) => state.smurfs.status);
 	const error = useSelector((state) => state.smurfs.error);
 
 	useEffect(() => {
-		dispatch(fetchSmurfs(smurfs));
-	}, []);
+		if (smurfsStatus === "idle" || smurfsStatus === "succeeded") {
+			dispatch(fetchSmurfs(smurfs));
+		}
+	}, [smurfs, smurfsStatus, dispatch]);
+
+	useEffect(() => {
+		if (updated) {
+			dispatch(fetchSmurfs(smurfs));
+		}
+		return () => {
+			dispatch(setUpdatedFalse);
+		}
+	}, [updated, dispatch, smurfs])
 
 
 	let content;
