@@ -5,7 +5,7 @@ import { getSmurfs } from "../../api/smurfsAPI";
 const initState = {
 	smurfs: [],
 	status: "idle",
-	updated: false,
+	// updated: false,
 	error: null,
 	currentRequestId: undefined,
 };
@@ -14,11 +14,6 @@ export const fetchSmurfs = createAsyncThunk(
 	"smurfs/fetchSmurfs",
 	async (smurfs, { getState, requestId }) => {
 		const { currentRequestId, status } = getState().smurfs;
-		// if (status !== "pending" || requestId !== currentRequestId) {
-		// 	// return;
-		// 	// console.log(status);
-		// 	// console.log(requestId, currentRequestId);
-		// }
 		const { data } = await axios.get("http://localhost:3333/smurfs");
 		return data;
 	}
@@ -29,6 +24,7 @@ export const postSmurf = createAsyncThunk(
 	async (bodyDataIn, { getState, requestId }) => {
 		const { currentRequestId, status } = getState().smurfs;
 		const { data } = await axios.post("http://localhost:3333/smurfs", bodyDataIn);
+		console.log(data);
 		return data;
 	}
 )
@@ -37,9 +33,6 @@ const smurfsSlice = createSlice({
 	name: "smurfs",
 	initialState: initState,
 	reducers: {
-		setUpdatedFalse: (state, action) => {
-			state.updated = false;
-		},
 	},
 	extraReducers: {
 		[fetchSmurfs.pending]: (state, action) => {
@@ -74,10 +67,9 @@ const smurfsSlice = createSlice({
 		},
 		[postSmurf.fulfilled]: (state, action) => {
 			const { requestId } = action.meta;
-			if ((state.status === "pending" || state === "succeeded") && state.currentRequestId === requestId) {
-				state.status = "succeeded";
-				state.smurfs.push(action.payload);
-				
+			if ((state.status === "pending") && state.currentRequestId === requestId) {
+				state.status = "idle";
+				state.smurfs = action.payload;
 				console.log(action.payload);
 			}
 		},
@@ -86,14 +78,14 @@ const smurfsSlice = createSlice({
 			if (state.status === "pending" && state.currentRequestId === requestId) {
 				state.status = "idle";
 				state.error = action.error;
-				
+
 				state.currentRequestId = undefined;
 			}
 		}
 	}
 });
 
-export const { setUpdatedFalse } = smurfsSlice.actions;
+// export const { setUpdatedFalse } = smurfsSlice.actions;
 
 export default smurfsSlice.reducer;
 

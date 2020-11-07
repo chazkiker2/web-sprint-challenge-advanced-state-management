@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectAllSmurfs, fetchSmurfs, setUpdatedFalse } from "./smurfsSlice";
+import { selectAllSmurfs, fetchSmurfs } from "./smurfsSlice";
 import styled from "styled-components";
 
 const SGallery = styled.div`
@@ -22,12 +22,9 @@ const SCard = styled.div`
 	width: 15rem;
 	height: 8rem;
 	border-radius: 20px;
-	/* justify-content: flex-start; */
 	background-color: ${pr => pr.theme.darkPurple};
 	color: ${pr => pr.theme.wildBlue};
 	div {
-		/* width: 100%;
-		height: 100%; */
 		display: flex;
 		flex-flow: column nowrap;
 		justify-content: center;
@@ -58,9 +55,20 @@ const SmurfCard = props => {
 const Smurfs = (props) => {
 	const dispatch = useDispatch();
 	const smurfs = useSelector(selectAllSmurfs);
-	const updated = useSelector((state) => state.smurfs.updated);
+	// const updated = useSelector((state) => state.smurfs.updated);
 	const smurfsStatus = useSelector((state) => state.smurfs.status);
 	const error = useSelector((state) => state.smurfs.error);
+
+	const prevSmurfsRef = useRef();
+	useEffect(() => {
+		prevSmurfsRef.current = smurfs;
+	});
+	// const prevSmurfs = prevSmurfsRef.current;
+	useEffect(() => {
+		if (prevSmurfsRef.current.length !== smurfs.length) {
+			dispatch(fetchSmurfs(smurfs));
+		}
+	}, [prevSmurfsRef, dispatch, smurfs])
 
 	// useEffect(() => {
 	// 	if (smurfsStatus === "idle" || smurfsStatus === "succeeded") {

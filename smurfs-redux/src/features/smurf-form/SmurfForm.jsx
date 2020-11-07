@@ -14,8 +14,8 @@ const SContainer = styled.div`
 	flex-flow: row nowrap;
 	justify-content: center;
 	/* align-items: center; */
-`;
-const SForm = styled.form`
+	form {
+
 	color: ${pr => pr.theme.wildBlue};
 	display: flex;
 	flex-flow: column nowrap;
@@ -49,6 +49,9 @@ const SForm = styled.form`
 			color: ${pr => pr.theme.wildBlue};
 		}
 	}
+	}
+`;
+const SForm = styled.form`
 `;
 
 const initFormState = {
@@ -62,17 +65,14 @@ const SmurfForm = (props) => {
 	const [input, handleChanges, clearForm] = useForm(initFormState);
 
 	const handleSubmit = (evt) => {
-		evt.preventDefault();
+		// evt.preventDefault();
 		dispatch(postSmurf(input));
 		clearForm();
-		return () => {
-			dispatch(fetchSmurfs())
-		}
 	}
 
 	return (
 		<SContainer>
-			<SForm onSubmit={handleSubmit}>
+			<form onSubmit={handleSubmit}>
 				<h1>Add a Smurf!</h1>
 				<label htmlFor="name">
 					Name:
@@ -87,7 +87,7 @@ const SmurfForm = (props) => {
 					<input name="height" id="height" type="number" step="1" value={input.height} onChange={handleChanges} />
 				</label>
 				<button>Submit</button>
-			</SForm>
+			</form>
 		</SContainer>
 	)
 }

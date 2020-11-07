@@ -9,7 +9,7 @@ import SmurfForm from "./features/smurf-form/SmurfForm";
 
 const SApp = styled.div`
 	background-color: ${pr => pr.theme.blackCoral};
-	height: 100vh;
+	min-height: 100vh;
 `;
 
 const Header = styled.header`
