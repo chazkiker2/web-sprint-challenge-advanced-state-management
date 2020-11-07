@@ -1,19 +1,17 @@
 import React from "react";
 import { useDispatch } from "react-redux"
 import { useForm } from "../../hooks/useForm";
-import { postSmurf, fetchSmurfs } from "../smurfs/smurfsSlice";
+import { postSmurf } from "../smurfs/smurfsSlice";
 import styled from "styled-components";
 
 const SContainer = styled.div`
 	background-color: ${pr => pr.theme.darkPurple};
 	height: 10rem;
 	width: 80%;
-	margin: 0 auto;
 	border-radius: 20px;
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: center;
-	/* align-items: center; */
 	form {
 
 	color: ${pr => pr.theme.wildBlue};
@@ -50,8 +48,6 @@ const SContainer = styled.div`
 		}
 	}
 	}
-`;
-const SForm = styled.form`
 `;
 
 const initFormState = {

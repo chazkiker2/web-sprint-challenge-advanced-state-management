@@ -1,6 +1,6 @@
 import axios from "axios"
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getSmurfs } from "../../api/smurfsAPI";
+
 
 const initState = {
 	smurfs: [],
@@ -13,7 +13,7 @@ const initState = {
 export const fetchSmurfs = createAsyncThunk(
 	"smurfs/fetchSmurfs",
 	async (smurfs, { getState, requestId }) => {
-		const { currentRequestId, status } = getState().smurfs;
+		// const { currentRequestId, status } = getState().smurfs;
 		const { data } = await axios.get("http://localhost:3333/smurfs");
 		return data;
 	}
@@ -22,7 +22,7 @@ export const fetchSmurfs = createAsyncThunk(
 export const postSmurf = createAsyncThunk(
 	"smurfs/postSmurf",
 	async (bodyDataIn, { getState, requestId }) => {
-		const { currentRequestId, status } = getState().smurfs;
+		// const { currentRequestId, status } = getState().smurfs;
 		const { data } = await axios.post("http://localhost:3333/smurfs", bodyDataIn);
 		console.log(data);
 		return data;
@@ -78,14 +78,11 @@ const smurfsSlice = createSlice({
 			if (state.status === "pending" && state.currentRequestId === requestId) {
 				state.status = "idle";
 				state.error = action.error;
-
 				state.currentRequestId = undefined;
 			}
 		}
 	}
 });
-
-// export const { setUpdatedFalse } = smurfsSlice.actions;
 
 export default smurfsSlice.reducer;
 

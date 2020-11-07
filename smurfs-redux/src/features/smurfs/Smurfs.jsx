@@ -9,9 +9,6 @@ const SGallery = styled.div`
 	justify-content: space-evenly;
 	align-items: stretch;
 	background-color: ${pr => pr.theme.wildBlue};
-	width: 80%;
-	margin: 5rem auto;
-	padding: 10rem;
 	border-radius: 20px;
 `;
 const SCard = styled.div`
@@ -21,6 +18,7 @@ const SCard = styled.div`
 	align-items: center;
 	width: 15rem;
 	height: 8rem;
+	margin: 1rem;
 	border-radius: 20px;
 	background-color: ${pr => pr.theme.darkPurple};
 	color: ${pr => pr.theme.wildBlue};

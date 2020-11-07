@@ -6,6 +6,7 @@ import theme from "./theme/index";
 
 import Smurfs from "./features/smurfs/Smurfs";
 import SmurfForm from "./features/smurf-form/SmurfForm";
+import SplitPane from "./components/SplitPane";
 
 const SApp = styled.div`
 	background-color: ${pr => pr.theme.blackCoral};
@@ -34,11 +35,17 @@ function App() {
 					<h1>SMURFS! With Redux</h1>
 				</Header>
 				{/* <Counter /> */}
-				<Smurfs />
-				<SmurfForm />
+				<SplitPane
+					left={
+						<SmurfForm />
+					}
+					right={
+						<Smurfs />
+					} />
+
 			</SApp>
 
-		</ThemeProvider>
+		</ThemeProvider >
 	);
 }
 
